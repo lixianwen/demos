@@ -12,11 +12,13 @@ def accept(sock, mask):
 
 
 def read(conn, mask):
+    """Note: we didn't consider how long the message it is here"""
     print('read callback')
     data = conn.recv(1024)     # Should be ready
     if data:
         print('Echoing', repr(data), 'to', conn)
-        conn.send(data)
+        sent = conn.send(data)
+        print('Have sent', sent)
     else:
         print('closing', conn)
         sel.unregister(conn)
@@ -27,7 +29,7 @@ s = socket.socket()
 s.bind(('localhost', 80))
 # listen() has a backlog parameter.
 # It specifies the number of unaccepted connections that the system will allow before refusing new connections.
-# Starting in Python 3.5, it’s optional. If not specified, a default backlog value is chosen.
+# Starting in Python 3.5, it's optional. If not specified, a default backlog value is chosen.
 
 # If your server receives a lot of connection requests simultaneously,
 # increasing the backlog value may help by setting the maximum length of the queue for pending connections.
@@ -35,7 +37,9 @@ s.bind(('localhost', 80))
 
 # Reference: https://realpython.com/python-sockets/
 s.listen()
-s.setblocking(False)  # To configure the socket in non-blocking mode. If we don't, the entire server is stalled until it's methods returned.
+# To configure the socket in non-blocking mode, which means socket methods call return immediately.
+# If we don't, the entire server is stalled until it's methods returned.
+s.setblocking(False)
 
 sel.register(s, selectors.EVENT_READ, accept)
 
