@@ -23,10 +23,8 @@ class SSHClientWithReturnCode:
 
         self.client = paramiko.client.SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
-        try:
-            self.client.connect(hostname, port, username, password, timeout=timeout, **kwargs)
-        except Exception as err:
-            raise ConnectionError(str(err))
+        # probably raise exception `socket.timeout`
+        self.client.connect(hostname, port, username, password, timeout=timeout, **kwargs)
 
         self.duration = duration
         if self.duration is not None:
