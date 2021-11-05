@@ -26,8 +26,8 @@ class MyTestCase(unittest.TestCase):
         self.assertNotEqual(return_code, 0)
 
     def test_timeout_command_work(self):
-        command = 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-        self.client.duration = 15
+        command = 'curl --limit-rate 50K -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+        self.client.duration = 10
         stdout, stderr, return_code = self.client.run(command)
         self.assertEqual(return_code, 124)
 
