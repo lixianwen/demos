@@ -77,9 +77,6 @@ class SSHClientWithReturnCode:
         channel.shutdown_write()
         self.sel.register(channel, selectors.EVENT_READ, self._read_buffer)
 
-        self.stdout_chunks.append(channel.recv(len(channel.in_buffer)))
-        # self.stderr_chunks.append(channel.recv_stderr(len(channel.in_stderr_buffer)))
-
         # read stdout/stderr in order to prevent read block hangs
         while not channel.closed or channel.recv_ready() or channel.recv_stderr_ready():
             self.got_chunk = False
