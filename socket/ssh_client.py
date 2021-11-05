@@ -4,10 +4,10 @@ import paramiko
 
 
 class SSHClientWithReturnCode:
-    """一个用于 ssh 到远程服务器执行命令并获取返回值和 return code 的类
+    """A ssh client wrapper for execute command at remote server, get the return code and output stream without hangs
 
-    参考：https://github.com/paramiko/paramiko/issues/563
-         https://stackoverflow.com/questions/23504126/do-you-have-to-check-exit-status-ready-if-you-are-going-to-check-recv-ready
+    reference：https://github.com/paramiko/paramiko/issues/563
+               https://stackoverflow.com/questions/23504126/do-you-have-to-check-exit-status-ready-if-you-are-going-to-check-recv-ready
     """
     def __init__(self, *, hostname: str, port: int = 22, username: str, password: str, duration: float = None, timeout: float = None, **kwargs):
         """
