@@ -1,15 +1,20 @@
 import selectors
+import sys
+import warnings
+from typing import Tuple, Dict
 
 import paramiko
 
+DEFAULT_LANG = 'en_US.UTF-8'
+
 
 class SSHClientWithReturnCode:
-    """A ssh client wrapper for execute command at remote server, get the return code and output stream without hangs
+    """A ssh client wrapper for execute command at remote server, get the return code and output stream without hangs.
 
-    reference：https://github.com/paramiko/paramiko/issues/563
+    reference: https://github.com/paramiko/paramiko/issues/563
                https://stackoverflow.com/questions/23504126/do-you-have-to-check-exit-status-ready-if-you-are-going-to-check-recv-ready
     """
-    def __init__(self, *, hostname: str, port: int = 22, username: str, password: str, duration: float = None, timeout: float = None, **kwargs):
+    def __init__(self, *, hostname: str, port: int = 22, username: str, password: str, duration: float = None, timeout: float = None, **kwargs: Dict):
         """
         :param hostname: hostname – the server to connect to
         :param port: port – the server port to connect to
@@ -18,7 +23,18 @@ class SSHClientWithReturnCode:
         :param duration: duration option (in seconds) for shell command `timeout`
         :param timeout: an optional timeout (in seconds) for the TCP connect
         :param kwargs: additional params pass to `paramiko.client.SSHClient.connect`
+
+        >>> with SSHClientWithReturnCode(hostname='a', username='b', password='c') as client:
+        >>>     s, f, c = client.run('[[ -f /home/airflow/dags/restore.py ]]')
+        >>>     assert c == 0
         """
+        self.duration = duration
+        if self.duration is not None:
+            # unhandled convert error, just raise it
+            self.duration = float(duration)
+            if self.duration <= 0:
+                raise ValueError(f'{duration} must be a float number and it grater then zero')
+
         self.sel = selectors.DefaultSelector()
 
         self.client = paramiko.client.SSHClient()
@@ -26,49 +42,47 @@ class SSHClientWithReturnCode:
         # probably raise exception `socket.timeout`
         self.client.connect(hostname, port, username, password, timeout=timeout, **kwargs)
 
-        self.duration = duration
-        if self.duration is not None:
-            if float(duration) <= 0:
-                raise ValueError(f'{duration} must be a floating point number and grater then zero')
-            else:
-                self.duration = float(duration)
-
-        self.stdout_chunks = []
-        self.stderr_chunks = []
-        self.got_chunk = False
+        self.stdout_chunks = b''
+        self.stderr_chunks = b''
 
     def _read_buffer(self, channel, mask):
-        """A callback will be called when the `channel` is ready
+        """A callback will be called when the `channel` is ready.
+
         :param channel: A file object for selection, monitoring it for I/O events
         :param mask: A bitwise mask of events to monitor
         """
         if channel.recv_ready():
-            self.stdout_chunks.append(channel.recv(len(channel.in_buffer)))
-            self.got_chunk = True
+            self.stdout_chunks += channel.recv(len(channel.in_buffer))
         if channel.recv_stderr_ready():
-            self.stderr_chunks.append(channel.recv_stderr(len(channel.in_stderr_buffer)))
-            self.got_chunk = True
+            self.stderr_chunks += channel.recv_stderr(len(channel.in_stderr_buffer))
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.sel.close()
-        self.client.close()
+        self.close()
 
-        if exc_val:
-            raise exc_val
+    def run(self, cmd: str, **kwargs: Dict) -> Tuple[int, str, str]:
+        """Execute a command.
 
-    def run(self, cmd: str):
-        """
         :param cmd: command executing on remote server
-        :returns: the stdout, stderr, and return code of the executing command, as a 3-tuple
+        :param kwargs: additional params pass to `paramiko.client.SSHClient.exec_command`
+        :returns: the return code, stdout and stderr of the executing command, as a 3-tuple
         """
         if self.duration:
             cmd = f'timeout {self.duration} {cmd}'
 
+        if 'environment' not in kwargs:
+            kwargs['environment'] = {'LANG': DEFAULT_LANG}
+        elif 'LANG' not in kwargs['environment']:
+            # kwargs['environment'] may not be a mapping
+            kwargs['environment']['LANG'] = DEFAULT_LANG
+
+        if '|' in cmd:
+            warnings.warn(f'Pipe in command: {cmd}, exit code determined by the last command', SyntaxWarning)
+
         # one channel per command
-        stdin, stdout, stderr = self.client.exec_command(cmd)
+        stdin, stdout, stderr = self.client.exec_command(cmd, **kwargs)
         # we do not need stdin.
         stdin.close()
         # get the shared channel for stdin/stdout/stderr
@@ -77,36 +91,46 @@ class SSHClientWithReturnCode:
         channel.shutdown_write()
         self.sel.register(channel, selectors.EVENT_READ, self._read_buffer)
 
-        # read stdout/stderr in order to prevent read block hangs
-        while not channel.closed or channel.recv_ready() or channel.recv_stderr_ready():
-            self.got_chunk = False
+        # capture any initial output in case channel is closed already
+        stdout_buffer_length = len(stdout.channel.in_buffer)
 
-            fd_list = self.sel.select()
-            for key, events in fd_list:
-                callback = key.data
-                callback(key.fileobj, events)
+        if stdout_buffer_length > 0:
+            self.stdout_chunks += stdout.channel.recv(stdout_buffer_length)
 
-            # if no data arrived in the last loop, check if we already received the exit code
-            # if input buffers are empty
-            if (
-                not self.got_chunk
-                and channel.exit_status_ready()
-                and not channel.recv_ready()
-                and not channel.recv_stderr_ready()
-            ):
-                # indicate that we are not going to read this channel any more
-                channel.shutdown_read()
-                channel.close()
-                # exit as remote side is finished and our buffer are empty
-                break
+        try:
+            # read stdout/stderr in order to prevent read block hangs
+            while not channel.closed or channel.recv_ready() or channel.recv_stderr_ready():
+                fd_list = self.sel.select()
+                for key, events in fd_list:
+                    callback = key.data
+                    callback(key.fileobj, events)
 
-        stdout.close()
-        stderr.close()
+                # if no data arrived in the last loop, check if we already received the exit code
+                # if input buffers are empty
+                if (
+                    channel.exit_status_ready()
+                    and not channel.recv_ready()
+                    and not channel.recv_stderr_ready()
+                ):
+                    # indicate that we are not going to read this channel any more
+                    channel.shutdown_read()
+                    channel.close()
+                    # exit as remote side is finished and our buffer are empty
+                    break
 
-        success = ''.join([s.decode('utf-8', 'ignore') for s in self.stdout_chunks])
-        failed = ''.join([s.decode('utf-8', 'ignore') for s in self.stderr_chunks])
-        # return code is always ready at this point
-        returncode = channel.recv_exit_status()
+            success = self.stdout_chunks.decode(sys.stdout.encoding, 'ignore')
+            failed = self.stderr_chunks.decode(sys.stderr.encoding, 'ignore')
+            # return code is always ready at this point
+            errno = channel.recv_exit_status()
 
-        return success, failed, returncode
+            return errno, success, failed
+        finally:
+            self.sel.unregister(channel)
+            stdout.close()
+            stderr.close()
+            self.stdout_chunks = b''
+            self.stderr_chunks = b''
 
+    def close(self):
+        self.sel.close()
+        self.client.close()
