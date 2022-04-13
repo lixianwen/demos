@@ -1,5 +1,4 @@
 import selectors
-import sys
 import warnings
 from typing import Tuple, Dict
 
@@ -118,8 +117,8 @@ class SSHClientWithReturnCode:
                     # exit as remote side is finished and our buffer are empty
                     break
 
-            success = self.stdout_chunks.decode(sys.stdout.encoding, 'ignore')
-            failed = self.stderr_chunks.decode(sys.stderr.encoding, 'ignore')
+            success = self.stdout_chunks.decode('utf-8', 'ignore')
+            failed = self.stderr_chunks.decode('utf-8', 'ignore')
             # return code is always ready at this point
             errno = channel.recv_exit_status()
 
