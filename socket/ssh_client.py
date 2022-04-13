@@ -1,6 +1,6 @@
 import selectors
 import warnings
-from typing import Tuple, Dict
+from typing import Tuple
 
 import paramiko
 
@@ -13,14 +13,14 @@ class SSHClientWithReturnCode:
     reference: https://github.com/paramiko/paramiko/issues/563
                https://stackoverflow.com/questions/23504126/do-you-have-to-check-exit-status-ready-if-you-are-going-to-check-recv-ready
     """
-    def __init__(self, *, hostname: str, port: int = 22, username: str, password: str, duration: float = None, timeout: float = None, **kwargs: Dict):
+    def __init__(self, *, hostname: str, port: int = 22, username: str, password: str, duration=None, timeout=None, **kwargs):
         """
         :param hostname: hostname – the server to connect to
         :param port: port – the server port to connect to
         :param username: username – the username to authenticate as
         :param password: password – Used for password authentication
-        :param duration: duration option (in seconds) for shell command `timeout`
-        :param timeout: an optional timeout (in seconds) for the TCP connect
+        :param float duration: duration option (in seconds) for shell command `timeout`
+        :param float timeout: an optional timeout (in seconds) for the TCP connect
         :param kwargs: additional params pass to `paramiko.client.SSHClient.connect`
 
         >>> with SSHClientWithReturnCode(hostname='a', username='b', password='c') as client:
@@ -61,7 +61,7 @@ class SSHClientWithReturnCode:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
 
-    def run(self, cmd: str, **kwargs: Dict) -> Tuple[int, str, str]:
+    def run(self, cmd: str, **kwargs) -> Tuple[int, str, str]:
         """Execute a command.
 
         :param cmd: command executing on remote server
