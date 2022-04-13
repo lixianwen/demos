@@ -113,7 +113,6 @@ class SSHClientWithReturnCode:
                 ):
                     # indicate that we are not going to read this channel any more
                     channel.shutdown_read()
-                    channel.close()
                     # exit as remote side is finished and our buffer are empty
                     break
 
@@ -125,6 +124,7 @@ class SSHClientWithReturnCode:
             return errno, success, failed
         finally:
             self.sel.unregister(channel)
+            channel.close()
             stdout.close()
             stderr.close()
             self.stdout_chunks = b''
