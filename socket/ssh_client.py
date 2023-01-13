@@ -1,7 +1,7 @@
 import logging
 import selectors
 import warnings
-from typing import Tuple
+from typing import Optional, Tuple
 
 import paramiko
 
@@ -16,7 +16,18 @@ class SSHClientWithReturnCode:
     reference: https://github.com/paramiko/paramiko/issues/563
                https://stackoverflow.com/questions/23504126/do-you-have-to-check-exit-status-ready-if-you-are-going-to-check-recv-ready
     """
-    def __init__(self, *, hostname: str, port: int = 22, username: str, password: str, duration=None, timeout=None, **kwargs):
+
+    def __init__(
+        self,
+        *,
+        hostname: str,
+        port: int = 22,
+        username: str,
+        password: Optional[str] = None,
+        duration: Optional[float] = None,
+        timeout: Optional[float] = None,
+        **connect_kwargs,
+    ):
         """
         :param hostname: hostname – the server to connect to
         :param port: port – the server port to connect to
@@ -24,10 +35,10 @@ class SSHClientWithReturnCode:
         :param password: password – Used for password authentication
         :param float duration: duration option (in seconds) for shell command `timeout`
         :param float timeout: an optional timeout (in seconds) for the TCP connect
-        :param kwargs: additional params pass to `paramiko.client.SSHClient.connect`
+        :param connect_kwargs: additional params pass to `paramiko.client.SSHClient.connect`
 
         >>> with SSHClientWithReturnCode(hostname='a', username='b', password='c') as client:
-        >>>     s, f, c = client.run('[[ -f /home/airflow/dags/restore.py ]]')
+        >>>     c, s, f = client.run('[[ -f /home/airflow/dags/restore.py ]]')
         >>>     assert c == 0
         """
         self.duration = duration
@@ -37,12 +48,22 @@ class SSHClientWithReturnCode:
             if self.duration <= 0:
                 raise ValueError(f'{duration} must be a float number and it grater then zero')
 
-        self.sel = selectors.DefaultSelector()
+        if timeout is not None:
+            timeout = float(timeout)
 
         self.client = paramiko.client.SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
         # probably raise exception `socket.timeout`
-        self.client.connect(hostname, port, username, password, timeout=timeout, **kwargs)
+        self.client.connect(
+            hostname=hostname,
+            port=port,
+            username=username,
+            password=password,
+            timeout=timeout,
+            **connect_kwargs,
+        )
+
+        self.sel = selectors.DefaultSelector()
 
         self.stdout_chunks = b''
         self.stderr_chunks = b''
