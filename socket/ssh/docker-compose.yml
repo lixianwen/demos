@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  openssh-server:
+    image: lscr.io/linuxserver/openssh-server:version-8.6_p1-r3
+    environment:
+        - TZ=Asia/Shanghai
+        - USER_PASSWORD=passwd
+        - USER_NAME=user
+        - PASSWORD_ACCESS=true
+        - PUBLIC_KEY=ssh-rsa AAAAB...
+    ports:
+      - 2222:2222
+
+  openssh-server-passwordless-sudo:
+    image: lscr.io/linuxserver/openssh-server:version-8.6_p1-r3
+    environment:
+      - TZ=Asia/Shanghai
+      - SUDO_ACCESS=true
+      - USER_NAME=user
+      - PUBLIC_KEY=ssh-rsa AAAAB...
+    ports:
+      - 3333:2222
