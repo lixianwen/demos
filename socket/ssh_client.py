@@ -1,7 +1,13 @@
+import errno
 import io
 import logging
+import os
+import re
 import selectors
+import stat
 import warnings
+import getpass
+import shutil
 from typing import Optional, Tuple
 
 import paramiko
@@ -101,6 +107,9 @@ class SSHClientWithReturnCode:
         self.stdout_chunks = b''
         self.stderr_chunks = b''
 
+        # SFTP client object
+        self._sftp = None
+
     def _read_buffer(self, channel, mask):
         """A callback will be called when the `channel` is ready.
 
@@ -178,9 +187,9 @@ class SSHClientWithReturnCode:
             success = self.stdout_chunks.decode('utf-8', 'ignore')
             failed = self.stderr_chunks.decode('utf-8', 'ignore')
             # return code is always ready at this point
-            errno = channel.recv_exit_status()
+            code = channel.recv_exit_status()
 
-            return errno, success, failed
+            return code, success, failed
         finally:
             self.sel.unregister(channel)
             channel.close()
@@ -192,3 +201,208 @@ class SSHClientWithReturnCode:
     def close(self):
         self.sel.close()
         self.client.close()
+
+        if self._sftp is not None:
+            self._sftp.close()
+
+    @property
+    def sftp(self):
+        """Return a `~paramiko.sftp_client.SFTPClient` object.
+
+        If called more than one time, memoizes the first result; thus, any
+        given `.Connection` instance will only ever have a single SFTP client,
+        and state (such as that managed by
+        `~paramiko.sftp_client.SFTPClient.chdir`) will be preserved.
+
+        Thanks for :library:`fabric`
+        """
+        if self._sftp is None:
+            self._sftp = self.client.open_sftp()
+
+        return self._sftp
+
+    def put(
+        self,
+        local: str,
+        remote: str,
+        preserve_mode: bool = True,
+        sudo: bool = False,
+    ):
+        """Upload file to remote server
+
+        :param local: File to upload. It can be a relative path or absolute path.
+        :param remote: Where the file upload to. Only accept an absolute path.
+        :param preserve_mode: Preserve file mode or not on remote server.
+        :param sudo: Whether to use sudo mechanism when upload wasn't granted or not
+        """
+        if hasattr(local, "write") and callable(local.write):
+            raise ValueError("Don't support file like object")
+        if not os.path.isabs(local):
+            local = os.path.abspath(local)
+        if not os.path.exists(local):
+            raise FileNotFoundError(
+                errno.ENOENT, f"No such file or directory: {local!r}"
+            )
+        if not os.path.isfile(local):
+            raise ValueError(f"{local!r} isn't a file")
+
+        sftp = self.sftp
+
+        local_base = os.path.basename(local)
+        if not remote:
+            raise ValueError(f"No allow empty remote: {remote!r}")
+        elif not os.path.isabs(remote):
+            raise ValueError(f"Remote must be absolute path, got {remote!r}")
+
+        try:
+            if stat.S_ISDIR(sftp.stat(remote).st_mode):
+                remote = os.path.join(remote, local_base)
+        except FileNotFoundError:
+            remote_dirname = os.path.dirname(remote)
+            if remote_dirname == "/":
+                raise FileNotFoundError(
+                    errno.ENOENT, f"No such file or directory: {remote!r}"
+                )
+
+            # May be its dirname exist, try again
+            sftp.stat(remote_dirname)
+        except PermissionError:
+            if sudo:
+                remote_is_dir, _, _ = self.run(f"sudo [ -d {remote} ]")
+                if remote_is_dir == 0:
+                    remote = os.path.join(remote, local_base)
+                else:
+                    remote_dirname = os.path.dirname(remote)
+                    remote_is_dir, _, _ = self.run(f"sudo [ -d {remote_dirname} ]")
+                    assert (
+                        remote_is_dir == 0
+                    ), f"{remote_dirname!r} not exist or not a directory"
+            else:
+                raise
+
+        try:
+            sftp.stat(remote)
+            logger.warning(
+                f"File {remote!r} exist on remote server, default to rewrite it."
+            )
+        except (FileNotFoundError, PermissionError):
+            pass
+
+        try:
+            logger.info(f"Uploading {local!r} to {remote!r}")
+            sftp.put(localpath=local, remotepath=remote)
+        except PermissionError:
+            remote_basename = os.path.basename(remote)
+            tmp_remote = os.path.join("/tmp", remote_basename)
+            logger.info(f"Uploading {local!r} to {tmp_remote!r}")
+            sftp.put(localpath=local, remotepath=tmp_remote)
+
+            logger.info(f"Moving {tmp_remote} to {remote}")
+            code_mv, _, failure_mv = self.run(f"sudo mv {tmp_remote} {remote}")
+            if code_mv:
+                raise RuntimeError(f"Upload failed: {failure_mv!r}")  # pragma: nocover
+
+        # Set mode to same as local end
+        if preserve_mode:
+            local_mode = os.stat(local).st_mode
+            mode = stat.S_IMODE(local_mode)
+            try:
+                # Expect *NOT* raise :exc:`FileNotFoundError` here
+                sftp.chmod(remote, mode)
+            except PermissionError:
+                code_chmod, _, failure_chmod = self.run(f"sudo chmod {mode:o} {remote}")
+                if code_chmod:
+                    raise RuntimeError(
+                        f"Change mode failed: {failure_chmod!r}"
+                    )  # pragma: nocover
+
+    def get(
+        self,
+        remote: str,
+        local: str,
+        preserve_mode: bool = True,
+        sudo: bool = False,
+    ):
+        """Download file from remote server
+
+        :param remote: File to download. Only accept an absolute path.
+        :param local: Path to save file. It can be a relative path or absolute path.
+        :param preserve_mode: Preserve file mode or not.
+        :param sudo: Whether to use sudo mechanism when download wasn't granted or not
+        """
+        sftp = self.sftp
+
+        if not remote:
+            raise ValueError(f"No allow empty remote: {remote!r}")
+        elif not os.path.isabs(remote):
+            raise ValueError(f"Remote must be absolute path, got {remote!r}")
+        try:
+            if stat.S_ISDIR(sftp.stat(remote).st_mode):
+                raise ValueError(f"Remote must be a file, got {remote!r}")
+        except PermissionError:
+            if sudo:
+                code_valid_remote, _, _ = self.run(f"sudo [ -f {remote} ]")
+                assert code_valid_remote == 0, "Remote not exist or not a file"
+            else:
+                raise
+
+        if not local:
+            raise ValueError(f"No allow empty local: {local!r}")
+        if not os.path.isabs(local):
+            local = os.path.abspath(local)
+        try:
+            if stat.S_ISDIR(os.stat(local).st_mode):
+                raise ValueError(f"Expect file path, got directory: {local!r}")
+        except FileNotFoundError:
+            dirname, basename = os.path.split(local.rstrip(os.sep))
+            stat.S_ISDIR(os.stat(dirname).st_mode)
+
+        try:
+            os.stat(local)
+            logger.warning(
+                f"File {local!r} exist on local server, default to rewrite it."
+            )
+        except FileNotFoundError:
+            pass
+
+        try:
+            logger.info(f"Pulling down {remote!r} and save it to {local!r}")
+            sftp.get(remotepath=remote, localpath=local)
+        except PermissionError:
+            code_cp, _, failure_cp = self.run(f"sudo cp {remote} /tmp")
+            if code_cp:
+                raise RuntimeError(failure_cp)  # pragma: nocover
+
+            code_who, success_who, failure_who = self.run("whoami")
+            if code_who:
+                raise RuntimeError(failure_who)  # pragma: nocover
+            username = success_who.strip()
+
+            tmp_remote = os.path.join("/tmp", os.path.basename(remote))
+            code_chown, _, failure_chown = self.run(
+                f"sudo [ -f {tmp_remote} ] && sudo chown {username}:{username} {tmp_remote}"
+            )
+            if code_chown:
+                raise RuntimeError(failure_chown)  # pragma: nocover
+
+            logger.info(f"Pulling down {tmp_remote!r} and save it to {local!r}")
+            sftp.get(remotepath=tmp_remote, localpath=local)
+            sftp.remove(tmp_remote)
+
+        # Set mode to same as remote
+        if preserve_mode:
+            try:
+                remote_mode = sftp.stat(remote).st_mode
+                mode = stat.S_IMODE(remote_mode)
+            except PermissionError:
+                code_stat, success_stat, failure_stat = self.run(f"sudo stat {remote}")
+                if code_stat:
+                    raise RuntimeError(failure_stat)  # pragma: nocover
+                re_mode = re.compile(r"Access: \((\d+).*\)  Uid")
+                match_mode = re_mode.search(success_stat)
+                mode = int(match_mode.group(1).strip(), 8)
+
+            # Expect *NOT* raise :exc:`FileNotFoundError` here
+            os.chmod(local, mode)
+            current_user = getpass.getuser()
+            shutil.chown(local, current_user, current_user)
