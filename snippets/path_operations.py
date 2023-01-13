@@ -5,7 +5,7 @@ from pathlib import PurePath, PurePosixPath
 
 def remove_first_part(path: Union[str, PurePath]) -> str:
     try:
-        new_path = path.relative_to(*path.parts[:2]).as_posix()
+        new_path = path.relative_to(*(path.parts[:2])).as_posix()
     except AttributeError:
         new_path = remove_first_part(PurePosixPath(path))
 
