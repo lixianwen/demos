@@ -1,3 +1,4 @@
+import io
 import logging
 import selectors
 import warnings
@@ -8,6 +9,32 @@ import paramiko
 logger = logging.getLogger(__name__)
 
 DEFAULT_LANG = 'en_US.UTF-8'
+
+SUPPORTED_ENCRYPTION_ALGORITHM = {
+    "DSA": paramiko.DSSKey,
+    "DSS": paramiko.DSSKey,
+    "RSA": paramiko.RSAKey,
+    "ECDSA": paramiko.ECDSAKey,
+    "ED25519": paramiko.Ed25519Key,
+}
+
+
+def create_pkey(
+    plain_text: str, tag: str = "RSA", passphrase: Optional[str] = None
+) -> paramiko.PKey:
+    """Instantiate `paramiko.PKey` for key authentication
+
+    :param plain_text: private key text
+    :param tag: encrypt type
+    :param passphrase: password for private key
+    """
+    tag = tag.upper()
+    try:
+        cls = SUPPORTED_ENCRYPTION_ALGORITHM[tag]
+    except KeyError:
+        raise ValueError(f"Unsupported encrypt algorithm {tag}")
+
+    return cls(file_obj=io.StringIO(plain_text), password=passphrase)
 
 
 class SSHClientWithReturnCode:
@@ -39,6 +66,12 @@ class SSHClientWithReturnCode:
 
         >>> with SSHClientWithReturnCode(hostname='a', username='b', password='c') as client:
         >>>     c, s, f = client.run('[[ -f /home/airflow/dags/restore.py ]]')
+        >>>     assert c == 0
+
+        >>> private_key = 'ssh-rsa ...'
+        >>> pkey = create_pkey(private_key)
+        >>> with SSHClientWithReturnCode(hostname='a', username='b', pkey=pkey) as client:
+        >>>     c, s, f = client.run('w')
         >>>     assert c == 0
         """
         self.duration = duration
