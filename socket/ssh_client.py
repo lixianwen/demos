@@ -1,8 +1,11 @@
+import logging
 import selectors
 import warnings
 from typing import Tuple
 
 import paramiko
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_LANG = 'en_US.UTF-8'
 
@@ -68,6 +71,8 @@ class SSHClientWithReturnCode:
         :param kwargs: additional params pass to `paramiko.client.SSHClient.exec_command`
         :returns: the return code, stdout and stderr of the executing command, as a 3-tuple
         """
+        logger.info(f'Running command: {cmd!r}')
+
         if self.duration:
             cmd = f'timeout {self.duration} {cmd}'
 
