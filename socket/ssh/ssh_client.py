@@ -8,7 +8,7 @@ import stat
 import warnings
 import getpass
 import shutil
-from typing import Optional, Tuple
+from typing import List, Optional, Tuple
 
 import paramiko
 
@@ -60,7 +60,7 @@ class SSHClientWithReturnCode:
         duration: Optional[float] = None,
         timeout: Optional[float] = None,
         **connect_kwargs,
-    ):
+    ) -> None:
         """
         :param hostname: hostname – the server to connect to
         :param port: port – the server port to connect to
@@ -83,7 +83,7 @@ class SSHClientWithReturnCode:
         self.duration = duration
         if self.duration is not None:
             # unhandled convert error, just raise it
-            self.duration = float(duration)
+            self.duration = float(self.duration)
             if self.duration <= 0:
                 raise ValueError(f'{duration} must be a float number and it grater then zero')
 
@@ -108,9 +108,9 @@ class SSHClientWithReturnCode:
         self.stderr_chunks = b''
 
         # SFTP client object
-        self._sftp = None
+        self._sftp: Optional[paramiko.SFTPClient] = None
 
-    def _read_buffer(self, channel, mask):
+    def _read_buffer(self, channel: paramiko.Channel, mask: int) -> None:
         """A callback will be called when the `channel` is ready.
 
         :param channel: A file object for selection, monitoring it for I/O events
@@ -167,7 +167,7 @@ class SSHClientWithReturnCode:
         try:
             # read stdout/stderr in order to prevent read block hangs
             while not channel.closed or channel.recv_ready() or channel.recv_stderr_ready():
-                fd_list = self.sel.select()
+                fd_list: List[Tuple[selectors.SelectorKey, int]] = self.sel.select()
                 for key, events in fd_list:
                     callback = key.data
                     callback(key.fileobj, events)
@@ -198,7 +198,7 @@ class SSHClientWithReturnCode:
             self.stdout_chunks = b''
             self.stderr_chunks = b''
 
-    def close(self):
+    def close(self) -> None:
         self.sel.close()
         self.client.close()
 
@@ -206,7 +206,7 @@ class SSHClientWithReturnCode:
             self._sftp.close()
 
     @property
-    def sftp(self):
+    def sftp(self) -> paramiko.SFTPClient:
         """Return a `~paramiko.sftp_client.SFTPClient` object.
 
         If called more than one time, memoizes the first result; thus, any
@@ -227,7 +227,7 @@ class SSHClientWithReturnCode:
         remote: str,
         preserve_mode: bool = True,
         sudo: bool = False,
-    ):
+    ) -> None:
         """Upload file to remote server
 
         :param local: File to upload. It can be a relative path or absolute path.
@@ -235,7 +235,7 @@ class SSHClientWithReturnCode:
         :param preserve_mode: Preserve file mode or not on remote server.
         :param sudo: Whether to use sudo mechanism when upload wasn't granted or not
         """
-        if hasattr(local, "write") and callable(local.write):
+        if hasattr(local, "write") and callable(getattr(local, "write")):
             raise ValueError("Don't support file like object")
         if not os.path.isabs(local):
             local = os.path.abspath(local)
@@ -255,7 +255,9 @@ class SSHClientWithReturnCode:
             raise ValueError(f"Remote must be absolute path, got {remote!r}")
 
         try:
-            if stat.S_ISDIR(sftp.stat(remote).st_mode):
+            remote_st_mode = sftp.stat(remote).st_mode
+            assert remote_st_mode is not None
+            if stat.S_ISDIR(remote_st_mode):
                 remote = os.path.join(remote, local_base)
         except FileNotFoundError:
             remote_dirname = os.path.dirname(remote)
@@ -322,7 +324,7 @@ class SSHClientWithReturnCode:
         local: str,
         preserve_mode: bool = True,
         sudo: bool = False,
-    ):
+    ) -> None:
         """Download file from remote server
 
         :param remote: File to download. Only accept an absolute path.
@@ -337,7 +339,9 @@ class SSHClientWithReturnCode:
         elif not os.path.isabs(remote):
             raise ValueError(f"Remote must be absolute path, got {remote!r}")
         try:
-            if stat.S_ISDIR(sftp.stat(remote).st_mode):
+            remote_st_mode = sftp.stat(remote).st_mode
+            assert remote_st_mode is not None
+            if stat.S_ISDIR(remote_st_mode):
                 raise ValueError(f"Remote must be a file, got {remote!r}")
         except PermissionError:
             if sudo:
@@ -393,6 +397,7 @@ class SSHClientWithReturnCode:
         if preserve_mode:
             try:
                 remote_mode = sftp.stat(remote).st_mode
+                assert remote_mode is not None
                 mode = stat.S_IMODE(remote_mode)
             except PermissionError:
                 code_stat, success_stat, failure_stat = self.run(f"sudo stat {remote}")
@@ -400,6 +405,8 @@ class SSHClientWithReturnCode:
                     raise RuntimeError(failure_stat)  # pragma: nocover
                 re_mode = re.compile(r"Access: \((\d+).*\)  Uid")
                 match_mode = re_mode.search(success_stat)
+                if match_mode is None:
+                    raise ValueError("Can not match mode.")
                 mode = int(match_mode.group(1).strip(), 8)
 
             # Expect *NOT* raise :exc:`FileNotFoundError` here
