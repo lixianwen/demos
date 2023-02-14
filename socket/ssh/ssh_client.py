@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_LANG = 'en_US.UTF-8'
 
+CMD_TIMEOUT = 10.0
+
 SUPPORTED_ENCRYPTION_ALGORITHM = {
     "DSA": paramiko.DSSKey,
     "DSS": paramiko.DSSKey,
@@ -59,6 +61,7 @@ class SSHClientWithReturnCode:
         password: Optional[str] = None,
         duration: Optional[float] = None,
         timeout: Optional[float] = None,
+        cmd_timeout: Optional[float] = None,
         **connect_kwargs,
     ) -> None:
         """
@@ -89,6 +92,10 @@ class SSHClientWithReturnCode:
 
         if timeout is not None:
             timeout = float(timeout)
+
+        self.cmd_timeout = cmd_timeout
+        if self.cmd_timeout is None:
+           self.cmd_timeout = timeout if timeout else CMD_TIMEOUT
 
         self.client = paramiko.client.SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
@@ -167,7 +174,7 @@ class SSHClientWithReturnCode:
         try:
             # read stdout/stderr in order to prevent read block hangs
             while not channel.closed or channel.recv_ready() or channel.recv_stderr_ready():
-                fd_list: List[Tuple[selectors.SelectorKey, int]] = self.sel.select()
+                fd_list: List[Tuple[selectors.SelectorKey, int]] = self.sel.select(self.cmd_timeout)
                 for key, events in fd_list:
                     callback = key.data
                     callback(key.fileobj, events)
