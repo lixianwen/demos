@@ -5,6 +5,7 @@ import os
 import re
 import selectors
 import stat
+import threading
 import warnings
 import getpass
 import shutil
@@ -117,6 +118,8 @@ class SSHClientWithReturnCode:
         # SFTP client object
         self._sftp: Optional[paramiko.SFTPClient] = None
 
+        self.lock = threading.RLock()
+
     def _read_buffer(self, channel: paramiko.Channel, mask: int) -> None:
         """A callback will be called when the `channel` is ready.
 
@@ -210,6 +213,7 @@ class SSHClientWithReturnCode:
         self.client.close()
 
         if self._sftp is not None:
+            # Lock and conditional check ensure multi call the method is fine.
             self._sftp.close()
 
     @property
@@ -224,7 +228,9 @@ class SSHClientWithReturnCode:
         Thanks for :library:`fabric`
         """
         if self._sftp is None:
-            self._sftp = self.client.open_sftp()
+            with self.lock:
+                if self._sftp is None:
+                    self._sftp = self.client.open_sftp()
 
         return self._sftp
 

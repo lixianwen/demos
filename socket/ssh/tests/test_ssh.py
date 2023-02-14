@@ -1,8 +1,11 @@
+import concurrent.futures
 import os
 import re
 import shutil
 import stat
 import tempfile
+import threading
+import time
 import warnings
 
 import paramiko
@@ -463,3 +466,29 @@ def test_download_case_two():
             remote_mode = int(match_mode.group(1).strip(), 8)
             local_mode = stat.S_IMODE(os.stat(local).st_mode)
             assert remote_mode == local_mode
+
+
+def detect_sftp_obj(client: SSHClientV2) -> int:
+    start = time.perf_counter()
+    print("Start: ", time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
+    thread_name = threading.current_thread().name
+    sftp_address = id(client.sftp)
+    print(f"Thread: {thread_name}, id(sftp)={sftp_address}")
+    print("End: ", time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
+    print(f"Cost: {time.perf_counter() - start}")
+
+    return sftp_address
+
+
+def test_singleton_sftp():
+    with SSHClientV2(hostname=HOST, username=USER, password=PWD, port=PORT) as client:
+        sftp_address_set = set()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+            future_to_url = {
+                executor.submit(detect_sftp_obj, client): i for i in range(10)
+            }
+            for future in concurrent.futures.as_completed(future_to_url):
+                sftp_address_set.add(future.result())
+
+        assert len(sftp_address_set) == 1
+
