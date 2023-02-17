@@ -1,0 +1,34 @@
+# design patterns
+https://python-patterns.guide/
+
+# view asm
+https://godbolt.org/
+
+# c document
+https://devdocs.io/
+https://www.gnu.org/software/gnu-c-manual/gnu-c-manual.html
+
+# c program
+https://zetcode.com/db/mysqlc/
+http://www.yolinux.com/TUTORIALS/LinuxTutorialPosixThreads.html
+https://beej.us/guide/bgnet/
+
+# makefile
+https://makefiletutorial.com/
+
+#
+https://www.baeldung.com/linux/bash-single-vs-double-brackets
+
+# redis distribute lock
+https://www.cnblogs.com/williamjie/p/9395659.html
+https://www.programcreek.com/python/example/117306/redis.lock.Lock
+
+# websocket
+https://www.fullstackpython.com/websockets.html
+https://sookocheff.com/post/networking/how-do-websockets-work/
+https://github.com/damonchen/flask-websocket/
+
+# orm
+https://docs.sqlalchemy.org/en/14/orm/query.html
+https://docs.sqlalchemy.org/en/14/orm/tutorial.html#common-filter-operators
+https://docs.sqlalchemy.org/en/14/core/sqlelement.html
