@@ -1,0 +1,346 @@
+<mxfile host="app.diagrams.net" modified="2024-02-05T12:13:04.736Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0" etag="dd_-RnF8h5p6DeVelVA4" version="22.1.16" type="device">
+  <diagram name="第 1 页" id="8-SeThVLokJVuMpw6I8j">
+    <mxGraphModel dx="1626" dy="1928" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-1" value="0x40052d" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-2" value="PC" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="280" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-4" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-5" value="Stack" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="260" y="90" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-8" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="1JHEhArvp0fd1EvIQNwi-12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="120" as="sourcePoint" />
+            <mxPoint x="360" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="470" y="140" as="sourcePoint" />
+            <mxPoint x="470" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-12" value="rbp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="410" y="105" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-13" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="200" as="sourcePoint" />
+            <mxPoint x="360" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-14" value="rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="414" y="180" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-27" value="执行 main 函数之前，当前 stack 的状态&lt;br&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="470" y="120" width="336" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-28" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="280" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-29" value="return address&lt;br&gt;0x4005c7" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="360" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-30" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="280" as="sourcePoint" />
+            <mxPoint x="360" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-31" value="rbp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="260" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-32" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="400" as="sourcePoint" />
+            <mxPoint x="360" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-33" value="rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="380" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-34" value="call main" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="580" y="330" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-35" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="480" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-36" value="return address&lt;br&gt;0x4005c7" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="560" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-37" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="480" as="sourcePoint" />
+            <mxPoint x="360" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-38" value="rbp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="460" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-39" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="639" as="sourcePoint" />
+            <mxPoint x="360" y="639" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-40" value="rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="619" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-41" value="rbp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="600" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-42" value="main 函数的第一条指令：&lt;br&gt;push rbp&lt;br&gt;这条指令存放在内存的 0x40052d 这个地址上" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="510" y="540" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-43" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="720" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-44" value="return address&lt;br&gt;0x4005c7" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="800" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-47" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="879" as="sourcePoint" />
+            <mxPoint x="360" y="879" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-48" value="rsp == rbp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="859" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-49" value="rbp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="840" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-50" value="mov rbp,rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="590" y="790" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-58" value="int a = 42&lt;br&gt;mov&amp;nbsp; &amp;nbsp; DWORD PTR [rbp-0x4],0x2a&lt;br&gt;DWORD PTR 是 double word pointer 的缩写&lt;br&gt;这个指示符告诉 CPU，应将接下来要处理的数据视为特定大小的单位&lt;br&gt;DWORD PTR 表示 32 位&lt;br&gt;这条指令的意思是把 0x2a 这个值放到 rbp - 4 的位置上，值类型的大小是 32 位" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1370" width="290" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-61" value="源码：&lt;br&gt;&lt;div&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;int main(void) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; int a = 42;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;a = %d\n&quot;, a);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; return 0;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="-180" width="170" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-67" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="960" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-68" value="return address&lt;br&gt;0x4005c7" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1040" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-69" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="1119" as="sourcePoint" />
+            <mxPoint x="360" y="1119" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-70" value="rbp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1099" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-71" value="rbp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1080" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-72" value="sub rsp,0x10" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="590" y="1030" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-73" value="New space for local variables of size 0x 10 bytes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-74" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="1200" as="sourcePoint" />
+            <mxPoint x="360" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-75" value="rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="430" y="1170" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-76" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="1160" as="sourcePoint" />
+            <mxPoint x="240" y="1160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-77" value="stack frame" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1150" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-78" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1280" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-79" value="return address&lt;br&gt;0x4005c7" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1360" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-80" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="1439" as="sourcePoint" />
+            <mxPoint x="360" y="1439" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-81" value="rbp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="414" y="1430" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-82" value="rbp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-83" value="42" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1440" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-84" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="1520" as="sourcePoint" />
+            <mxPoint x="360" y="1520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-85" value="rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="410" y="1500" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-86" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="1480" as="sourcePoint" />
+            <mxPoint x="240" y="1480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-87" value="stack frame" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1470" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-88" value="unused" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1480" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-89" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1600" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-90" value="return address&lt;br&gt;0x4005c7" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1680" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-91" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="1759" as="sourcePoint" />
+            <mxPoint x="360" y="1759" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-92" value="rbp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1720" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-93" value="42" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1760" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-96" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="1800" as="sourcePoint" />
+            <mxPoint x="240" y="1800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-97" value="stack frame" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1790" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-98" value="unused" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1800" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-99" value="rbp == rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="430" y="1739" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-100" value="leave（1）&lt;br&gt;mov rsp,rbp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="590" y="1739" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-101" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1920" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-102" value="return address&lt;br&gt;0x4005c7" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2000" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-103" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="2040" as="sourcePoint" />
+            <mxPoint x="360" y="2040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-104" value="rbp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2040" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-105" value="42" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2080" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-108" value="unused" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2120" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-109" value="rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="414" y="2020" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-110" value="leave（2）&lt;br&gt;pop rbp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="590" y="2059" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-111" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="1920" as="sourcePoint" />
+            <mxPoint x="360" y="1920" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-112" value="rbp&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="1900" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-113" value="previous stack frame" style="rounded=0;whiteSpace=wrap;html=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2240" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-114" value="return address&lt;br&gt;0x4005c7" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2320" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-115" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="2319" as="sourcePoint" />
+            <mxPoint x="360" y="2319" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-116" value="rbp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2360" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-117" value="42" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-118" value="unused" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99FF99;" vertex="1" parent="1">
+          <mxGeometry x="240" y="2440" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-119" value="rsp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="414" y="2308" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-120" value="ret&lt;br&gt;ret 指令 pop return address 然后跳转到这个地址上取出该指令然后执行" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="540" y="2280" width="240" height="101" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-121" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="2240" as="sourcePoint" />
+            <mxPoint x="360" y="2240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-122" value="rbp&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="2220" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-123" value="汇编代码：&lt;br&gt;&lt;pre&gt;[root@localhost pkgdemo]# gcc -W -Wall test.c&lt;br&gt;[root@localhost pkgdemo]# objdump -d -j .text -M intel&lt;br&gt;a.out：&amp;nbsp; &amp;nbsp; &amp;nbsp;文件格式 elf64-x86-64&lt;br&gt;&lt;br&gt;Disassembly of section .text:&lt;br&gt;...&lt;br&gt;000000000040052d &amp;lt;main&amp;gt;:&lt;br&gt;&amp;nbsp; 40052d:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;55&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; push&amp;nbsp; &amp;nbsp;rbp&lt;br&gt;&amp;nbsp; 40052e:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;48 89 e5&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; mov&amp;nbsp; &amp;nbsp; rbp,rsp&lt;br&gt;&amp;nbsp; 400531:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;48 83 ec 10&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;sub&amp;nbsp; &amp;nbsp; rsp,0x10&lt;br&gt;&amp;nbsp; 400535:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;c7 45 fc 2a 00 00 00&amp;nbsp; &amp;nbsp; mov&amp;nbsp; &amp;nbsp; DWORD PTR [rbp-0x4],0x2a&lt;br&gt;&amp;nbsp; 40053c:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;8b 45 fc&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; mov&amp;nbsp; &amp;nbsp; eax,DWORD PTR [rbp-0x4]&lt;br&gt;&amp;nbsp; 40053f:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;89 c6&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;mov&amp;nbsp; &amp;nbsp; esi,eax&lt;br&gt;&amp;nbsp; 400541:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;bf f0 05 40 00&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; mov&amp;nbsp; &amp;nbsp; edi,0x4005f0&lt;br&gt;&amp;nbsp; 400546:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;b8 00 00 00 00&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; mov&amp;nbsp; &amp;nbsp; eax,0x0&lt;br&gt;&amp;nbsp; 40054b:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;e8 c0 fe ff ff&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; call&amp;nbsp; &amp;nbsp;400410 &amp;lt;printf@plt&amp;gt;&lt;br&gt;&amp;nbsp; 400550:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;b8 00 00 00 00&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; mov&amp;nbsp; &amp;nbsp; eax,0x0&lt;br&gt;&amp;nbsp; 400555:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;c9&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; leave&amp;nbsp;&amp;nbsp;&lt;br&gt;&amp;nbsp; 400556:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;c3&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ret&amp;nbsp; &amp;nbsp;&amp;nbsp;&lt;br&gt;&amp;nbsp; 400557:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;66 0f 1f 84 00 00 00&amp;nbsp; &amp;nbsp; nop&amp;nbsp; &amp;nbsp; WORD PTR [rax+rax*1+0x0]&lt;br&gt;&amp;nbsp; 40055e:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;00 00&amp;nbsp;&lt;br&gt;...&lt;/pre&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="260" y="-410" width="480" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-124" value="0x40052e" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="550" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-125" value="PC" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="70" y="520" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-126" value="0x400531" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="760" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-127" value="PC" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="70" y="730" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-131" value="源码：&lt;br&gt;&lt;div&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;void func1(void) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; int a;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; int b;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; int c;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; register long rsp asm (&quot;rsp&quot;);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; register long rbp asm (&quot;rbp&quot;);&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; a = 42;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; b = 1;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; c = a + b;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;a = %d, b = %d, c = %d\n&quot;, a, b, c);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In func1, rbp = %lx\n&quot;, rbp);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In func1, rsp = %lx\n&quot;, rsp);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In func1, previous rbp = %lx\n&quot;, *(unsigned long *)rbp);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In func1, return address = %lx\n&quot;, *(unsigned long *)((char *)rbp + 8));&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;void func2(void) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; int x;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; int y;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; int z;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; register long rsp asm (&quot;rsp&quot;);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; register long rbp asm (&quot;rbp&quot;);&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;x = %d, y = %d, z = %d\n&quot;, x, y, z);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In func2, rbp=0x%lx\n&quot;, rbp);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In func2, rsp=0x%lx\n&quot;, rsp);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;int main(void) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; register long rsp asm (&quot;rsp&quot;);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; register long rbp asm (&quot;rbp&quot;);&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In main, rbp=0x%lx\n&quot;, rbp);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In main, rsp=0x%lx\n&quot;, rsp);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In main, previous rbp = %lx\n&quot;, *(unsigned long *)rbp);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; printf(&quot;In main, return address = %lx\n&quot;, *(unsigned long *)((char *)rbp + 8));&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; func1();&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; func2();&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; return 0;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry y="2560" width="400" height="690" as="geometry" />
+        </mxCell>
+        <mxCell id="1JHEhArvp0fd1EvIQNwi-132" value="Term:&lt;br&gt;Program Counter（PC）：The PC holds the memory address of the instruction that should be executed next.&amp;nbsp;&lt;br&gt;&lt;br&gt;Return Address:&amp;nbsp;&amp;nbsp;The address of the instruction to be executed after returning from the function, commonly the next instruction in line in the calling function, and therefore the current value of the Program Counter&lt;br&gt;&lt;br&gt;当 call 指令执行时，return address 会首先被 push 到堆栈上，然后 PC 的值设置为当前要调用的函数（callee）的地址，这样就改变了当前的控制流转而 调用 callee&lt;br&gt;&lt;br&gt;当 callee 的 ret 指令执行时，return address 被弹出并放入 PC 中，于是控制流回到 caller&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="2560" width="420" height="680" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
