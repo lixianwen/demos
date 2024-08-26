@@ -32,3 +32,26 @@ https://github.com/damonchen/flask-websocket/
 https://docs.sqlalchemy.org/en/14/orm/query.html
 https://docs.sqlalchemy.org/en/14/orm/tutorial.html#common-filter-operators
 https://docs.sqlalchemy.org/en/14/core/sqlelement.html
+
+# Django ORM quick reference
+https://djangocentral.com/django-orm-cheatsheet/
+https://amitness.com/posts/django-orm-for-sql-users
+
+# expert
+https://tonybai.com/articles/
+
+# Go learning
+https://github.com/xxjwxc/uber_go_guide_cn
+https://github.com/golang/vscode-go/blob/master/docs/debugging.md
+https://www.soberkoder.com/go-rest-api-gorilla-mux/
+https://go.dev/wiki/CodeReviewComments
+
+# network layout
+https://www.zhihu.com/tardis/bd/art/352135931?source_id=1001
+
+# hack the vm
+https://blog.holbertonschool.com/hack-virtual-memory-stack-registers-assembly-code/
+
+# github cicd
+https://github.blog/2022-06-03-a-beginners-guide-to-ci-cd-and-automation-on-github/
+
